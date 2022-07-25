@@ -1,0 +1,43 @@
+<!doctype html>
+	<html>
+		<head>
+			<title>Login Page</title>
+			<style>
+				.body{
+					background: #55abfc;
+
+				}
+				.container{
+					text-align: center;
+				}
+				.button{
+					height: 2.5rem;
+					width: 10rem;
+					margin-top: 200px;
+					justify-content: center;
+  					align-items: center;
+  					background-color:#2ecc71;
+  					cursor: pointer;
+  					color: white;
+  					transition: all 0.3s;
+  					overflow: hidden;
+					border-radius: 5px;
+  					box-shadow: 0 6px 30px -10px rgba(#CCCCCC, 1);
+  					margin-left: 3rem;
+				}
+  
+  				.button:hover {
+    				transform: translateX(5px) translateY(-7px);
+				}
+			</style>
+		</head>
+		<body class="body">
+			<div class="container">
+				<form name="loginhomepage" class="box" action="404notfound.html">
+					<input type="submit" formaction="Student.php" class="button" name="student" value="Student">
+					<input type="submit" formaction="Faculty.php" class="button" name="faculty" value="Faculty">
+					<input type="submit" formaction="Admin.php" class="button" name="admin" value="Admin">
+				</form>
+			</div>
+		</body>
+	</html>
