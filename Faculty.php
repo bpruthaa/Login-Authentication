@@ -1,252 +1,73 @@
-<?php
-	$hostname = "localhost";
-	$username = "root";
-	$password = "";
-	$database = "test";
-	$conn = mysqli_connect($hostname, $username, $password, $database);
-	if(!conn)
-	{
-		die("unable to connect");
-	}
-	if($_POST)
-	{
-		$uname=$_POST["email"];
-		$pass=$_POST["password"];
-		//Preventing Sql Injection with username and Password
-		$uname=mysqli_real_escape_string($conn,$uname);
-		$pass=mysqli_real_escape_string($conn,$pass);
-		$query= "SELECT * from login_db where email = '$uname' AND password = '$pass' ";
-		$result= mysqli_query($conn,$query);
-	}
-	if(mysqli_num_rows($result)==1)
-	{
-		echo("Welcome User");
-	}
-	else
-	{
-		echo("Incorrect Username/Password");
-	}
-?>
-<!DOCTYPE HTML>
-<HTML>
-	<HEAD>
-			<link href='https://fonts.googleapis.com/css?family=Open+Sans:700,600' rel='stylesheet' type='text/css'>
 
-			<STYLE>
-				body{
-  						font-family: 'Open Sans', sans-serif;
-  						background:#3498db;
-  						margin: 0 auto 0 auto;  
-  						width:100%; 
-  						text-align:center;
-  						margin: 20px 0px 20px 0px;   
-					}
-				p{
-  						font-size:12px;
-  						text-decoration: none;
-  						color:#ffffff;
-				}
-				.box{
-  						background:white;
-  						width:300px;
-  						border-radius:6px;
-  						margin: 0 auto 0 auto;
-  						padding:0px 0px 70px 0px;
-  						border: #2980b9 4px solid; 
-					}
-				.roles{
-  						background:#ecf0f1;
-  						border: #ccc 1px solid;
-  						border-bottom: #ccc 2px solid;
-  						padding: 8px;
-  						width:270px;
-  						color:#AAAAAA;
-  						margin-top:10px;
-  						font-size:1em;
-  						border-radius:4px;
-					}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Faculty-Login</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+</head>
+<body>
+ <div class="container">
+  <div class="row">
+    <div style="width: 40%; margin: 25px auto;">
+    <h3 style="text-align: center;">Faculty-Login</h3>
+    <form method="POST" action="">
+      <div class="form-group">
+        <label>UserName:</label><input type="text" name="UserName" class="form-control" autofocus placeholder="username">
+      </div>
+      <div class="form-group">
+        <label>Password:</label><input type="Password" name="Password" class="form-control" autofocus placeholder="Password">
+      </div>
 
-				.email{
-  						background:#ecf0f1;
-  						border: #ccc 1px solid;
-  						border-bottom: #ccc 2px solid;
-  						padding: 8px;
-  						width:250px;
-  						color:#AAAAAA;
-  						margin-top:10px;
-  						font-size:1em;
-  						border-radius:4px;
-					}
+      <label>Enter Captcha:</label>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <input type="text" class="form-control" readonly id="capt">
+        </div>
+        <div class="form-group col-md-6">
+          <input type="text" class="form-control" id="textinput">
+        </div>
+      </div>
 
-				.password{
-  						border-radius:4px;
-  						background:#ecf0f1;
-  						border: #ccc 1px solid;
-  						padding: 8px;
-  						width:250px;
-  						font-size:1em;
-					}
+  <div class="form-group">
+        <button onclick="validcap()" class="btn btn-lg btn-success btn-block">Submit</button>
+      </div>
+    </form>
+    <h6>Captcha not visible <img src="refresh.jpg" width="40px" onclick="cap()"></h6>
+    <p>New Here?<a href="">Sign Up</a> </p>
+    <p>Forgotten Password?<a href="">Recover here</a> </p>
+  </div>
+</div>
+</div>
+<script type="text/javascript">
+  function cap(){
+    var alpha = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V'
+                 ,'W','X','Y','Z','1','2','3','4','5','6','7','8','9','0','a','b','c','d','e','f','g','h','i',
+                 'j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z', '!','@','#','$','%','^','&','*','+'];
+                 var a = alpha[Math.floor(Math.random()*71)];
+                 var b = alpha[Math.floor(Math.random()*71)];
+                 var c = alpha[Math.floor(Math.random()*71)];
+                 var d = alpha[Math.floor(Math.random()*71)];
+                 var e = alpha[Math.floor(Math.random()*71)];
+                 var f = alpha[Math.floor(Math.random()*71)];
 
-				.btn{
-  						background:#2ecc71;
-  						width:125px;
-  						padding-top:5px;
-  						padding-bottom:5px;
-  						color:white;
-  						border-radius:4px;
-  						border: #27ae60 1px solid;
-  
-  						margin-top:20px;
-  						margin-bottom:20px;
-  						float:left;
-  						margin-left:16px;
-  						font-weight:800;
-  						font-size:0.8em;
-					}
-
-					.btn:hover{
-  						background:#2CC06B; 
-					}
-
-					
-
-
-			</STYLE>
-	
-	</HEAD>
-	<BODY>
-		<form method="post" action="login.php" method="post">
-			<input type="email" name="email" value="email" onFocus="field_focus(this, 'email');" onblur="field_blur(this, 'email');" class="email" id="email" /> 
-			<input type="password" name="password" value="email" onFocus="field_focus(this, 'email');" onblur="field_blur(this, 'email');" class="email" id="pwd"/> 
-			<div><input type="submit" class="btn" id="submit" value="login"></div> 
-			</div>
-		</form><br>
-
-		<p>Forgot your password? <u style="color:#f1c40f;"><a href="#">Click Here!</u></a></p>
-  
-	</BODY>
-</HTML><?php
-	$hostname = "localhost";
-	$username = "root";
-	$password = "";
-	$database = "test";
-	$conn = mysqli_connect($hostname, $username, $password, $database);
-	if(!conn)
-	{
-		die("unable to connect");
-	}
-	if($_POST)
-	{
-		$uname=$_POST["email"];
-		$pass=$_POST["password"];
-		//Preventing Sql Injection with username and Password
-		$uname=mysqli_real_escape_string($conn,$uname);
-		$pass=mysqli_real_escape_string($conn,$pass);
-		$query= "SELECT * from login_db where email = '$uname' AND password = '$pass' ";
-		$result= mysqli_query($conn,$query);
-	}
-	if(mysqli_num_rows($result)==1)
-	{
-		echo("Welcome User");
-	}
-	else
-	{
-		echo("Incorrect Username/Password");
-	}
-?>
-<!DOCTYPE HTML>
-<HTML>
-	<HEAD>
-			<link href='https://fonts.googleapis.com/css?family=Open+Sans:700,600' rel='stylesheet' type='text/css'>
-
-			<STYLE>
-				body{
-  						font-family: 'Open Sans', sans-serif;
-  						background:#3498db;
-  						margin: 0 auto 0 auto;  
-  						width:100%; 
-  						text-align:center;
-  						margin: 20px 0px 20px 0px;   
-					}
-				p{
-  						font-size:12px;
-  						text-decoration: none;
-  						color:#ffffff;
-				}
-				.box{
-  						background:white;
-  						width:300px;
-  						border-radius:6px;
-  						margin: 0 auto 0 auto;
-  						padding:0px 0px 70px 0px;
-  						border: #2980b9 4px solid; 
-					}
-				.roles{
-  						background:#ecf0f1;
-  						border: #ccc 1px solid;
-  						border-bottom: #ccc 2px solid;
-  						padding: 8px;
-  						width:270px;
-  						color:#AAAAAA;
-  						margin-top:10px;
-  						font-size:1em;
-  						border-radius:4px;
-					}
-
-				.email{
-  						background:#ecf0f1;
-  						border: #ccc 1px solid;
-  						border-bottom: #ccc 2px solid;
-  						padding: 8px;
-  						width:250px;
-  						color:#AAAAAA;
-  						margin-top:10px;
-  						font-size:1em;
-  						border-radius:4px;
-					}
-
-				.password{
-  						border-radius:4px;
-  						background:#ecf0f1;
-  						border: #ccc 1px solid;
-  						padding: 8px;
-  						width:250px;
-  						font-size:1em;
-					}
-
-				.btn{
-  						background:#2ecc71;
-  						width:125px;
-  						padding-top:5px;
-  						padding-bottom:5px;
-  						color:white;
-  						border-radius: 5px;
-  						box-shadow: 0 6px 30px -10px rgba(#CCCCCC, 1);
- 						margin-top:20px;
-  						margin-bottom:20px;
-  						float: center;
-  						font-weight:800;
-  						font-size:0.8em;
-					}
-
-					.btn:hover{
-  						background:#2CC06B; 
-					}
-
-					
-
-
-			</STYLE>
-	
-	</HEAD>
-	<BODY>
-		<form method="post" action="login.php" method="post">
-			<input type="email" name="email" value="email" onFocus="field_focus(this, 'email');" onblur="field_blur(this, 'email');" class="email" id="email" /> <br>
-			<input type="password" name="password" value="email" onFocus="field_focus(this, 'email');" onblur="field_blur(this, 'email');" class="email" id="pwd"/> <br>
-			<input type="submit" class="btn" id="submit" value="login">
-		</form><br>
-
-		<p>Forgot your password? <u style="color:#f1c40f;"><a href="#">Click Here!</u></a></p>
-  
-	</BODY>
-</HTML>
+                 var final = a+b+c+d+e+f;
+                 document.getElementById("capt").value=final;
+               }
+               function validcap(){
+                var stg1 = document.getElementById('capt').value;
+                var stg2 = document.getElementById('textinput').value;
+                if(stg1==stg2)
+                {
+                  alert("Form is validated Succesfully");
+                  return true;
+                }else
+                {
+                  alert("Please enter a valid captcha");
+                  return false;
+                }
+               }
+</script>
+</body>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+</html>
